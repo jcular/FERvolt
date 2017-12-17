@@ -15,7 +15,7 @@ func _draw():
 	var player_viewports = []
 	var viewport_count = 0
 	
-	for child_node in get_node("/root/Game/racing_scene/starting_positions").get_children():
+	for child_node in get_parent().get_parent().get_node("racing_scene/starting_positions").get_children():
 		if (child_node.has_node("player_scene")):
 			var player_viewport = child_node.get_node("player_scene/Viewport")
 			player_viewports.append(player_viewport)

@@ -16,6 +16,19 @@ export var action_reverse = "ui_down"
 export var action_left = "ui_left"
 export var action_right = "ui_right"
 
+func _change_color(color):
+	var mesh = get_node("real_curves")
+	# Create a new FixedMaterial (for example)
+	var new_material = FixedMaterial.new()
+	
+	# Assign it on the mesh as an override
+	mesh.set_material_override(new_material)
+	
+	# Modify the material (it will be applied on all meshes you use it on, here only one)
+	# Note: if you need a texture or other setup, you may want to set more params
+	new_material.set_parameter(FixedMaterial.PARAM_DIFFUSE, color)
+	
+
 func _fixed_process(delta):
 	if (Input.is_action_pressed(action_left)):
 		steer_target = -STEER_LIMIT
@@ -47,7 +60,6 @@ func _fixed_process(delta):
 			steer_angle = steer_target
 	
 	set_steering(steer_angle)
-
 
 func _ready():
 	set_fixed_process(true)
