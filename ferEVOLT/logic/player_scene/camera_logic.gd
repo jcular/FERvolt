@@ -7,8 +7,8 @@ export var max_distance = 4.0
 export var angle_v_adjust = 0.0
 export var autoturn_ray_aperture = 25
 export var autoturn_speed = 50
-var max_height = 2.0
-var min_height = 0
+var max_height = 3.0
+var min_height = 2
 
 
 func _fixed_process(dt):
