@@ -15,6 +15,7 @@ func check_lap():
 			counter += 1
 	if counter == number_of_checkpoints:
 		lap += 1
+		get_node("Viewport/hud/Label").set_text("LAP : " + str(lap) + " " + str(number_of_laps))
 		for k in checkpoints.keys():
 			checkpoints[k] = false
 		
@@ -29,6 +30,6 @@ func _load_car_scene(car, color, controls):
 func _ready():
 	set_process(true);
 	_load_car_scene("res://scenes/car_scenes/lamba_purple.scn", color, controls)
-
+	get_node("Viewport/hud/Label").set_text("LAP : " + str(lap) + "/" + str(number_of_laps))
 func _process(delta):
 	get_node("Viewport/Camera").set_global_transform(get_node("Camera").get_global_transform());

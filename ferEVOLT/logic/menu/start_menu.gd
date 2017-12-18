@@ -12,28 +12,26 @@ var player_color = {0:Color(0,1,0)}
 func _set_color(color, player):
 	player_color[player] = color
 
-func _load_scene(scene):
+func _load_scene(scene, player):
 	var tt = load(scene).instance()
-	tt.color = player_color[0]
+	tt.color = player_color[player]
 	tt.set_name("player_scene")
-	loaded_scene = load("res://scenes/racing_scene.tscn").instance()
-	loaded_scene.get_node("racing_scene/starting_positions/player_pos_1").add_child(tt)
-	tt = load(scene).instance()
-	tt.color = Color(1,1,0)
-	tt.controls["action_accel"] = "ui_up2"
-	tt.controls["action_brake"] = "space"
-	tt.controls["action_reverse"] = "ui_down2"
-	tt.controls["action_left"] = "ui_left2"
-	tt.controls["action_right"] = "ui_right2"
-	tt.set_name("player_scene")
-	loaded_scene.get_node("racing_scene/starting_positions/player_pos_2").add_child(tt)
-	get_parent().add_child(loaded_scene)
-	hide()
+	loaded_scene.get_node("racing_scene/starting_positions/"+player).add_child(tt)
+	
 
 func _ready():
 	if not is_hidden():
 		hide()
-	get_node("PlayerContainer/HBoxContainer/ColorPickerButton").connect("color_changed", self, "_on_color_change")
+		
+	get_node("PlayerContainer/player_1/Label").set_text("Player 1:")
+	get_node("PlayerContainer/player_2/Label").set_text("Player 2:")
+	get_node("PlayerContainer/player_3/Label").set_text("Player 3:")
+	get_node("PlayerContainer/player_4/Label").set_text("Player 4:")
+	
+	get_node("PlayerContainer/player_1/ColorPickerButton").connect("color_changed", self, "_on_color_change1")
+	get_node("PlayerContainer/player_2/ColorPickerButton").connect("color_changed", self, "_on_color_change2")
+	get_node("PlayerContainer/player_3/ColorPickerButton").connect("color_changed", self, "_on_color_change3")
+	get_node("PlayerContainer/player_4/ColorPickerButton").connect("color_changed", self, "_on_color_change4")
 	get_node("Buttons/start_game_button").connect("pressed", self, "_on_start_pressed")
 	get_node("Buttons/back_button").connect("pressed", self, "_on_btnBack_pressed")
 
@@ -42,10 +40,24 @@ func _ready():
 	
 func _on_start_pressed():
 	main_menu_music.stop_all()
-	_load_scene("res://scenes/player_scene/player_scene.tscn")
+	loaded_scene = load("res://scenes/racing_scene.tscn").instance()
+	for player in get_node("PlayerContainer").get_children():
+		if player.get_node("checkbox").is_pressed():
+			_load_scene("res://scenes/player_scene/player_scene.tscn", player.get_name())
+	get_parent().add_child(loaded_scene)
+	hide()
 
-func _on_color_change(color):
-	_set_color(color, 0)
+func _on_color_change1(color):
+	_set_color(color, "player_1")
+	
+func _on_color_change2(color):
+	_set_color(color, "player_2")
+	
+func _on_color_change3(color):
+	_set_color(color, "player_3")
+
+func _on_color_change4(color):
+	_set_color(color, "player_4")
 
 func _on_btnBack_pressed():
 	hide()
