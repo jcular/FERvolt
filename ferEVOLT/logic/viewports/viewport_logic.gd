@@ -9,8 +9,6 @@ func _process(delta):
 	update();
 
 func _draw():
-	var draw_p1 = false;
-	var draw_p2 = false;
 	
 	var player_viewports = []
 	var viewport_count = 0
@@ -24,13 +22,21 @@ func _draw():
 	var control_rect = get_rect();
 	
 	control_rect.pos = Vector2();
+	
+	split_screen_type = viewport_count % 2
+	
+	if (viewport_count == 4):
+		split_screen_type = 2
+	
 	if split_screen_type == 0:
 		control_rect.size.y /= viewport_count;
 	elif split_screen_type == 1:
 		control_rect.size.x /= viewport_count;
+	elif split_screen_type == 2:
+		control_rect.size.x /= 2;
+		control_rect.size.y /= 2;
 	
-	split_screen_type = viewport_count % 2
-	
+	var count = 0
 	for viewport in player_viewports:
 		viewport.set_rect(control_rect)
 		var texture_rect = viewport.get_render_target_texture();
@@ -39,3 +45,14 @@ func _draw():
 			control_rect.pos.y += control_rect.size.y;
 		elif split_screen_type == 1:
 			control_rect.pos.x += control_rect.size.x;
+		elif split_screen_type == 2:
+			if count == 0:
+				control_rect.pos.x += control_rect.size.x;
+			elif count == 1:
+				control_rect.pos.x -= control_rect.size.x;
+				control_rect.pos.y += control_rect.size.y;
+			elif count == 2:
+				control_rect.pos.x += control_rect.size.x;
+				
+				
+		count+=1

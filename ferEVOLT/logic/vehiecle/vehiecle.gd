@@ -3,7 +3,7 @@ extends VehicleBody
 
 # Member variables
 const STEER_SPEED = 2
-const STEER_LIMIT = 0.5
+const STEER_LIMIT = 0.7
 
 var steer_angle = 0
 var steer_target = 0
@@ -11,6 +11,13 @@ var steer_target = 0
 const MAX_SPEED = 300
 
 export var engine_force = 100
+
+const player_controls = {
+	"player_1":{"action_accel":"ui_up1", "action_brake":"space1", "action_reverse":"ui_down1", "action_left":"ui_left1", "action_right":"ui_right1"},
+	"player_2":{"action_accel":"ui_up2", "action_brake":"space2", "action_reverse":"ui_down2", "action_left":"ui_left2", "action_right":"ui_right2"},
+	"player_3":{"action_accel":"ui_up3", "action_brake":"space3", "action_reverse":"ui_down3", "action_left":"ui_left3", "action_right":"ui_right3"},
+	"player_4":{"action_accel":"ui_up4", "action_brake":"space4", "action_reverse":"ui_down4", "action_left":"ui_left4", "action_right":"ui_right4"}
+}
 
 export var action_accel = "ui_up"
 export var action_brake = "space"
@@ -24,15 +31,18 @@ var sample = null
 func set_checkpoint(checkpoint_name):
 	var player_scene = get_parent().get_parent().get_parent()
 	player_scene.checkpoints[checkpoint_name] = true
+
+func add_lap():
+	var player_scene = get_parent().get_parent().get_parent()
 	player_scene.check_lap()
 
-func set_controls(controls):
-	if controls.size() == 5:
-		action_accel = controls["action_accel"]
-		action_brake = controls["action_brake"]
-		action_reverse = controls["action_reverse"]
-		action_left = controls["action_left"]
-		action_right = controls["action_right"]
+func set_controls(player_name):
+	if player_controls[player_name].size() == 5:
+		action_accel = player_controls[player_name]["action_accel"]
+		action_brake = player_controls[player_name]["action_brake"]
+		action_reverse = player_controls[player_name]["action_reverse"]
+		action_left = player_controls[player_name]["action_left"]
+		action_right = player_controls[player_name]["action_right"]
 
 func change_color(color):
 	var mesh = get_node("real_curves")

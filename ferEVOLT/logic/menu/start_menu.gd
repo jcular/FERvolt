@@ -16,6 +16,7 @@ func _load_scene(scene, player):
 	var tt = load(scene).instance()
 	tt.color = player_color[player]
 	tt.set_name("player_scene")
+	tt.player_name = player
 	loaded_scene.get_node("racing_scene/starting_positions/"+player).add_child(tt)
 	
 
