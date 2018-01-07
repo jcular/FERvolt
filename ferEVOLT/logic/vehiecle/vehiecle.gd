@@ -2,13 +2,22 @@ extends VehicleBody
 
 
 # Member variables
-const STEER_SPEED = 0.5
-const STEER_LIMIT = 0.4
+const STEER_SPEED = 2
+const STEER_LIMIT = 0.7
 
 var steer_angle = 0
 var steer_target = 0
 
+const MAX_SPEED = 300
+
 export var engine_force = 100
+
+const player_controls = {
+	"player_1":{"action_accel":"ui_up1", "action_brake":"space1", "action_reverse":"ui_down1", "action_left":"ui_left1", "action_right":"ui_right1"},
+	"player_2":{"action_accel":"ui_up2", "action_brake":"space2", "action_reverse":"ui_down2", "action_left":"ui_left2", "action_right":"ui_right2"},
+	"player_3":{"action_accel":"ui_up3", "action_brake":"space3", "action_reverse":"ui_down3", "action_left":"ui_left3", "action_right":"ui_right3"},
+	"player_4":{"action_accel":"ui_up4", "action_brake":"space4", "action_reverse":"ui_down4", "action_left":"ui_left4", "action_right":"ui_right4"}
+}
 
 export var action_accel = "ui_up"
 export var action_brake = "space"
@@ -16,7 +25,26 @@ export var action_reverse = "ui_down"
 export var action_left = "ui_left"
 export var action_right = "ui_right"
 
-func _change_color(color):
+var pressed = false
+var sample = null
+
+func set_checkpoint(checkpoint_name):
+	var player_scene = get_parent().get_parent().get_parent()
+	player_scene.checkpoints[checkpoint_name] = true
+
+func add_lap():
+	var player_scene = get_parent().get_parent().get_parent()
+	player_scene.check_lap()
+
+func set_controls(player_name):
+	if player_controls[player_name].size() == 5:
+		action_accel = player_controls[player_name]["action_accel"]
+		action_brake = player_controls[player_name]["action_brake"]
+		action_reverse = player_controls[player_name]["action_reverse"]
+		action_left = player_controls[player_name]["action_left"]
+		action_right = player_controls[player_name]["action_right"]
+
+func change_color(color):
 	var mesh = get_node("real_curves")
 	# Create a new FixedMaterial (for example)
 	var new_material = FixedMaterial.new()
@@ -38,13 +66,21 @@ func _fixed_process(delta):
 		steer_target = 0
 	
 	if (Input.is_action_pressed(action_accel)):
-		set_engine_force(engine_force)
+		if !pressed:
+			sample = get_node("music_node").get_sample_library().get_sample("sounds")
+			sample.set_loop_format(sample.LOOP_FORWARD)
+			sample.set_loop_begin(0)
+			sample.set_loop_end(sample.get_length())
+			get_node("music_node").play("sounds")
+			pressed = true
+		set_engine_force(min(engine_force + get_engine_force(), MAX_SPEED))
 	else:
 		set_engine_force(0)
 	
 	if (Input.is_action_pressed(action_reverse)):
 		set_engine_force(-engine_force/2)
-		
+		pressed = false	
+		get_node("music_node").stop_all()
 	if (Input.is_action_pressed(action_brake)):
 		set_brake(1.0)
 	else:

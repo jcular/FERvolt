@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=1]
+[gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://logic/player_scene/player_scene.gd" type="Script" id=1]
 [ext_resource path="res://logic/player_scene/camera_logic.gd" type="Script" id=2]
+[ext_resource path="res://scenes/player_scene/hud.tscn" type="PackedScene" id=3]
 
 [node name="player_scene" type="Spatial"]
 
@@ -64,5 +65,7 @@ visible_layers = 1048575
 environment = null
 h_offset = 0.0
 v_offset = 0.0
+
+[node name="hud" parent="Viewport" instance=ExtResource( 3 )]
 
 
