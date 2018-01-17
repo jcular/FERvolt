@@ -2,14 +2,27 @@ extends Control
 
 export var split_screen_type = 0;
 
+func on_exit_desktop():
+	find_node("Menu")._on_btnQuit_pressed()
+	
+func on_exit_menu():
+	find_node("Start").reset_game()
+
 func _ready():
-	set_process(true);
+	get_node("Panel/exit_desktop").connect("pressed", self, "on_exit_desktop")
+	get_node("Panel/exit_menu").connect("pressed", self, "on_exit_menu")
+	set_process(true)
 
 func _process(delta):
 	update();
 
 func _draw():
-	
+	if (Input.is_action_pressed("menu_button")):
+		var panel = get_node("Panel")
+		if panel.is_hidden():
+			panel.show()
+		else:
+			panel.hide()
 	var player_viewports = []
 	var viewport_count = 0
 	

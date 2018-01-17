@@ -25,6 +25,7 @@ export var action_reverse = "ui_down"
 export var action_left = "ui_left"
 export var action_right = "ui_right"
 
+var forward = false
 var pressed = false
 var sample = null
 
@@ -67,20 +68,30 @@ func _fixed_process(delta):
 	
 	if (Input.is_action_pressed(action_accel)):
 		if !pressed:
+			get_node("music_node").stop_all()
 			sample = get_node("music_node").get_sample_library().get_sample("sounds")
 			sample.set_loop_format(sample.LOOP_FORWARD)
 			sample.set_loop_begin(0)
 			sample.set_loop_end(sample.get_length())
 			get_node("music_node").play("sounds")
 			pressed = true
+		forward = false
+			
 		set_engine_force(min(engine_force + get_engine_force(), MAX_SPEED))
 	else:
 		set_engine_force(0)
 	
 	if (Input.is_action_pressed(action_reverse)):
 		set_engine_force(-engine_force/2)
+		if !forward:
+			get_node("music_node").stop_all()
+			sample = get_node("music_node").get_sample_library().get_sample("back")
+			sample.set_loop_format(sample.LOOP_FORWARD)
+			sample.set_loop_begin(0)
+			sample.set_loop_end(sample.get_length())
+			get_node("music_node").play("back")
+			forward = true
 		pressed = false	
-		get_node("music_node").stop_all()
 	if (Input.is_action_pressed(action_brake)):
 		set_brake(1.0)
 	else:

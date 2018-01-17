@@ -11,6 +11,7 @@ func _ready():
 	get_node("Buttons/options_button").connect("pressed", self, "_on_btnOption_pressed")
 	get_node("Buttons/quit_button").connect("pressed", self, "_on_btnQuit_pressed")
 
+
 func _on_btnStart_pressed():
 	start_game.show()
 

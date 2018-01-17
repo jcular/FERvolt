@@ -108,6 +108,64 @@ margin/bottom = -1.0
 script/script = ExtResource( 1 )
 split_screen_type = 0
 
+[node name="Panel" type="Panel" parent="Control/Viewports"]
+
+visibility/visible = false
+anchor/left = 3
+anchor/top = 3
+anchor/right = 3
+anchor/bottom = 3
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 99.5
+margin/top = 136.5
+margin/right = -99.5
+margin/bottom = -98.5
+
+[node name="exit_menu" type="Button" parent="Control/Viewports/Panel"]
+
+anchor/top = 1
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 40.0
+margin/top = 148.0
+margin/right = 40.0
+margin/bottom = 118.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Exit to menu"
+flat = false
+
+[node name="exit_desktop" type="Button" parent="Control/Viewports/Panel"]
+
+anchor/top = 1
+anchor/right = 1
+anchor/bottom = 1
+focus_neighbour/left = NodePath("50")
+focus_neighbour/top = NodePath("100")
+focus_neighbour/right = NodePath("50")
+focus_neighbour/bottom = NodePath("60")
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 40.0
+margin/top = 50.0
+margin/right = 40.0
+margin/bottom = 20.0
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+text = "Exit to desktop"
+flat = false
+
 [node name="racing_scene" type="Spatial" parent="."]
 
 _import_transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
