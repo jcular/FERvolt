@@ -19,7 +19,13 @@ func _load_scene(scene, player):
 	tt.player_name = player
 	loaded_scene.get_node("racing_scene/starting_positions/"+player).add_child(tt)
 	
-
+func reset_game():
+	main_menu_music.play("TryHard", true)
+	get_parent().remove_child(loaded_scene)
+	get_parent().get_node("Main").show()
+	get_parent().get_node("Options").hide()
+	hide()
+	
 func _ready():
 	if not is_hidden():
 		hide()

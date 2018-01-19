@@ -18,7 +18,9 @@ func check_lap():
 		get_node("Viewport/hud/Label").set_text(str(lap) + "/" + str(number_of_laps))
 		for k in checkpoints.keys():
 			checkpoints[k] = false
-		
+	if lap == number_of_laps:
+		get_node("Viewport/hud/you_win?").show()
+
 func _load_car_scene(car, color, player):
 	var tt = load(car).instance()
 	tt.set_name("car_scene")

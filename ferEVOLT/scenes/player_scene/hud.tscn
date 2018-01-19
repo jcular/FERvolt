@@ -5,14 +5,16 @@
 [node name="hud" type="Panel"]
 
 visibility/self_opacity = 0.0
+anchor/right = 1
+anchor/bottom = 1
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 0.0
 margin/top = 0.0
-margin/right = 265.0
-margin/bottom = 230.0
+margin/right = 0.0
+margin/bottom = 0.0
 
 [node name="Label" type="Label" parent="."]
 
@@ -23,15 +25,38 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 20.0
-margin/top = 20.0
-margin/right = -30.0
-margin/bottom = -10.0
+margin/left = 8.0
+margin/top = 2.0
+margin/right = 1577.0
+margin/bottom = 827.0
 custom_fonts/font = ExtResource( 1 )
 text = "0/3"
 align = 1
 valign = 1
 uppercase = true
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="you_win?" type="Label" parent="."]
+
+visibility/visible = false
+anchor/left = 3
+anchor/top = 3
+anchor/right = 3
+anchor/bottom = 3
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 400.0
+margin/top = 200.0
+margin/right = -400.0
+margin/bottom = -200.0
+custom_fonts/font = ExtResource( 1 )
+text = "YOU WIN"
+align = 1
+valign = 1
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
